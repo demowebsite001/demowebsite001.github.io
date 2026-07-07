@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>HỢP ĐỒNG MUA BÁN</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; background-color: #f0f0f0; margin: 0; padding: 20px; color: #000; }
+        .container { max-width: 794px; background: #fff; margin: 0 auto; padding: 75px 56px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .btn-panel { max-width: 794px; margin: 0 auto 20px auto; text-align: right; }
+        button { background-color: #0056b3; color: white; border: none; padding: 10px 20px; font-size: 14px; cursor: pointer; border-radius: 4px; font-family: Arial, sans-serif; }
+        button:hover { background-color: #004085; }
+
+        .txt-center { text-align: center; }
+        .txt-justify { text-align: justify; }
+        .bold { font-weight: bold; }
+        .uppercase { text-transform: uppercase; }
+        .italic { font-style: italic; }
+        
+        p, div { font-size: 13pt; line-height: 1.5; margin: 0 0 6px 0; text-align: justify; }
+        
+        input[type="text"] { font-family: 'Times New Roman', Times, serif; font-size: 13pt; border: none; border-bottom: 1px dashed #999; padding: 0 5px; background-color: transparent; color: #000; }
+        input[type="text"]:focus { background-color: #f0f7ff; outline: none; border-bottom: 1px solid #0056b3; }
+        
+        .w-full { width: 95%; }
+        .w-small { width: 50px; text-align: center; }
+        .w-medium { width: 200px; }
+        .w-large { width: 350px; }
+
+        .header-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
+        .header-table td { border: none !important; padding: 0; vertical-align: top; font-size: 12pt; text-align: center; line-height: 1.4; }
+
+        .content-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .content-table th, .content-table td { border: 1px solid #000 !important; padding: 8px; font-size: 12pt; text-align: center; vertical-align: middle; }
+        .content-table th { font-weight: bold; background-color: #f2f2f2; }
+        .content-table td input { width: 95%; text-align: center; border: none; background: transparent; font-size: 12pt; }
+        .content-table td input:focus { background-color: #fff; outline: 1px solid #0056b3; }
+
+        .signature-table { width: 100%; border-collapse: collapse; margin-top: 50px; }
+        .signature-table td { border: none !important; padding: 0; width: 50%; text-align: center; vertical-align: top; font-size: 13pt; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+<div class="btn-panel">
+    <button onclick="exportToWord()">Tải file Word (.doc)</button>
+</div>
+
+<div class="container" id="contract-content">
+    <table class="header-table">
+        <tr>
+            <!-- <td style="width: 45%; font-weight: bold; text-transform: uppercase; text-align: center;"> -->
+                <!-- CÔNG TY TNHH KEEN VIỆT NAM<br> -->
+                <!-- <span style="font-weight: normal; font-size: 11pt;">Số: <input type="text" id="contract_id" value="0406/HĐDV.2024" class="w-medium" style="font-size: 11pt;"></span> -->
+            <!-- </td> -->
+            <td style="width: 55%; font-weight: bold; text-align: center;">
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                <span style="font-weight: bold;">Độc lập - Tự do - Hạnh phúc</span>
+                <div style="border-top: 1px solid #000; width: 140px; margin: 4px auto 0 auto;"></div>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <div class="txt-center bold" style="font-size: 15pt; margin-bottom: 25px;">HỢP ĐỒNG DỊCH VỤ</div>
+
+    <p class="italic">- Căn cứ Bộ Luật Dân sự số 91/2015/QH13 ngày 24/11/2015 được Quốc Hội nước Cộng hoà Xã hội Chủ nghĩa Việt Nam thông qua và có hiệu lực thi hành từ ngày 01/01/2017;</p>
+    <p class="italic">- Căn cứ Luật Thương mại số 36/2005/QH 11 ngày 14/6/2005 của Quốc hội nước Cộng hoà Xã hội Chủ nghĩa Việt Nam;</p>
+    <p class="italic" style="margin-bottom: 20px;">- Căn cứ nhu cầu và khả năng đáp ứng của các bên.</p>
+
+    <p>Hôm nay, ngày <input type="text" id="c_day" value="04" class="w-small"> tháng <input type="text" id="c_month" value="06" class="w-small"> năm <input type="text" id="c_year" value="2024" class="w-small">, các bên đứng tên trong hợp đồng này là:</p>
+
+    <p class="bold" style="margin-top: 15px;">BÊN BẠN (Bên A): <input type="text" id="a_name" value="CÔNG TY TNHH NTH VIET NAM" class="w-large bold uppercase"></p>
+    <p>Địa chỉ: <input type="text" id="a_addr" value="108 Phan Huy Ích, Phường 15, Quận Tân Bình, TP Hồ Chí Minh, Việt Nam" class="w-full"></p>
+    <p>Người đại diện: <input type="text" id="a_rep" value="Ông NGUYỄN TẤN HẢI" class="w-medium bold"></p>
+    <!-- <p>Chức vụ: <input type="text" id="a_role" value="Giám đốc" class="w-medium"></p> -->
+    <p>Điện thoại: <input type="text" id="a_phone" value="0339220521" class="w-medium"></p>
+    <p>Mã số thuế: <input type="text" id="a_tax" value="0312748633" class="w-medium"></p>
+    <p>Tài khoản số: <input type="text" id="a_acc" value="060140891341 – Sacombank - CN Quận 12, TP HCM" class="w-full"></p>
+
+    <p class="bold" style="margin-top: 15px;">BÊN MUA (Bên B): <input type="text" id="b_name" value="TÊN" class="w-large bold uppercase"></p>
+    <p>Địa chỉ: <input type="text" id="b_addr" value="ĐỊA CHỈ" class="w-full"></p>
+    <p>Người đại diện: <input type="text" id="b_rep" value="Ông NGUYỄN VĂN A" class="w-medium bold"></p>
+    <!-- <p>Chức vụ: <input type="text" id="b_role" value="Giám đốc" class="w-medium"></p> -->
+    <p>Mã số thuế: <input type="text" id="b_tax" value="0301340440" class="w-medium"></p>
+    <p>Điện thoại: <input type="text" id="b_phone" value="(028) 39849422" class="w-medium"></p>
+    <p>Tài khoản số: <input type="text" id="b_acc" value="120540254 tại VPBank – CN Hồ Chí Minh" class="w-full"></p>
+
+    <p style="margin-top: 15px;">Sau khi bàn bạc, thoả thuận hai bên thống nhất ký kết hợp đồng với các nội dung và điều khoản sau:</p>
+
+    <p class="bold" style="margin-top: 15px;">Điều 1: Nội dung hợp đồng</p>
+    <p>Bên A nhận sửa chữa máy lạnh cho bên B, với các công việc cụ thể như sau:</p>
+
+    <table class="content-table" id="invoice-table">
+        <thead>
+            <tr>
+                <th style="width: 6%">TT</th>
+                <th style="width: 44%">NỘI DUNG</th>
+                <th style="width: 10%">ĐVT</th>
+                <th style="width: 8%">SỐ LƯỢNG</th>
+                <th style="width: 14%">ĐƠN GIÁ</th>
+                <th style="width: 18%">THÀNH TIỀN</th>
+                <th style="width: 8%" class="no-word"><button type="button" onclick="addRow()" style="padding: 2px 8px; font-size: 12px; background-color: #28a745; color: white; border: none; cursor: pointer; border-radius: 3px;">+</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="item-row">
+                <td class="stt-cell">1</td>
+                <td><input type="text" class="t_content" value="Sửa chữa máy lạnh" style="text-align: left;"></td>
+                <td><input type="text" class="t_unit" value="Gói"></td>
+                <td><input type="text" class="t_qty" value="3" onchange="calculateTotal()"></td>
+                <td><input type="text" class="t_price" value="6.000.000" onchange="calculateTotal()"></td>
+                <td><input type="text" class="t_sub" value="18.000.000" readonly></td>
+                <td class="no-word"><button type="button" onclick="deleteRow(this)" style="padding: 2px 6px; font-size: 11px; background-color: #dc3545; color: white; border: none; cursor: pointer; border-radius: 3px;">x</button></td>
+            </tr>
+            <tr id="row-summary-1">
+                <td colspan="5" class="bold" style="text-align: right;">Thành tiền</td>
+                <td><input type="text" id="t_total" value="18.000.000" readonly class="bold"></td>
+                <td class="no-word"></td>
+            </tr>
+            <tr id="row-summary-2">
+                <td colspan="5" class="bold" style="text-align: right;">Thuế VAT 8%</td>
+                <td><input type="text" id="t_vat" value="1.440.000" readonly class="bold"></td>
+                <td class="no-word"></td>
+            </tr>
+            <tr id="row-summary-3">
+                <td colspan="5" class="bold" style="text-align: right;">Tổng tiền thanh toán</td>
+                <td><input type="text" id="t_all" value="19.440.000" readonly class="bold"></td>
+                <td class="no-word"></td>
+            </tr>
+        </tbody>
+    </table>
+    <p><i>(Bằng chữ: <input type="text" id="t_text" value="Mười chín triệu bốn trăm ba mươi tư ngàn đồng chẵn" class="w-full italic">)</i></p>
+
+    <p class="bold" style="margin-top: 15px;">Điều 2: Thời gian và địa điểm</p>
+    <p>2.1 Thời gian: Trong vòng 05 ngày làm việc tính từ khi hai bên ký hợp đồng.</p>
+    <p>2.2 Địa điểm: Số 1A Nguyễn Văn Lượng, Phường 6, Quận Gò Vấp, TP. HCM</p>
+    <p>Người liên hệ: Võ Văn Nhiều (ĐT: 0974079009)</p>
+
+    <p class="bold" style="margin-top: 15px;">Điều 3: Giá trị hợp đồng, hình thức và phương thức thanh toán</p>
+    <p>3.1 Giá trị hợp đồng: <span id="val_contract_text" class="bold">19.440.000</span> đồng <i>(Bằng chữ: <span id="val_contract_word" class="italic">Mười chín triệu bốn trăm ba mươi tư ngàn đồng chẵn</span>)</i></p>
+    <p>Ghi chú: Giá trên đã bao gồm thuế GTGT - Loại hợp đồng: Trọn gói - Thời gian thực hiện hợp đồng: Tháng 6/2024.</p>
+    <p>3.2 Hình thức thanh toán: Chuyển khoản vào tài khoản theo thông tin sau:<br>
+    Tên tài khoản: CÔNG TY TNHH KEEN VIỆT NAM</p>
+    <p>Tài khoản số: 060140891341 – Tại ngân hàng Sacombank - CN Quận 12, TP HCM</p>
+    <p>3.3 Phương thức thanh toán: Chuyển khoản</p>
+    Sau khi Bên A hoàn tất toàn bộ công việc của Hợp đồng, Bên B thanh toán cho Bên A tổng số tiền: <span id="pay_contract_text" class="bold">19.440.000</span> đồng <i>(Bằng chữ: <span id="pay_contract_word" class="italic">Mười chín triệu bốn trăm ba mươi tư ngàn đồng chẵn</span>)</i>, sau 03~07 ngày từ ngày hai bên ký biên bản nghiệm thu thanh lý hợp đồng và Bên A xuất hóa đơn tài chính cho Bên B.</p>
+
+    <p class="bold" style="margin-top: 15px;">Điều 4: Trách nhiệm của hai bên</p>
+    <p>4.1 Trách nhiệm Bên A: Cung cấp linh kiện đạt chất lượng tốt, giao hàng đúng thời gian quy định. Nếu giao hàng chậm không đúng yêu cầu của Bên B thì sẽ chịu phạt 0,1% trên 1 ngày của tổng giá trị Hợp đồng.</p>
+    <p>4.2 Trách nhiệm Bên B: Thanh quyết toán đúng quy định như mục 3.3 Điều 3 Hợp đồng này. Nếu bên mua (B) chưa thanh toán đầy đủ số tiền thì hai bên có thể thương lượng hoặc bên bán (A) có quyền thu hồi vô điều kiện tất cả sản phẩm đã cung cấp và tất cả sản phẩm đã giao theo hợp đồng này vẫn thuộc về tài sản của bên bán (A).</p>
+
+    <p class="bold" style="margin-top: 15px;">Điều 5: Quy tắc đạo đức</p>
+    <p>Để đảm bảo sự công bằng, minh bạch trong quan hệ kinh doanh giữa hai bên:</p>
+    <p>5.1 Bên A cam kết: Không thúc đẩy, gây sức ép dưới mọi hình thức; không tặng, cho nhân viên Bên B bất kỳ những lợi ích vật chất nào dưới nhiều hình thức khác nhau (tiền hoa hồng, phiếu mua hàng, quà tặng, tiệc…). Thông báo ngay lập tức cho Ban giám đốc Bên B các hành vi của bất kỳ nhân viên Bên B nhằm gây khó khăn, o ép Bên B nhằm mang lại bất kỳ lợi ích cho cá nhân.</p>
+    <p>5.2 Bên B cam kết: Tôn trọng quy tắc đối xử bình đẳng với tất cả các nhà cung cấp ở điều kiện cạnh tranh như nhau có các sản phẩm và dịch vụ cùng chất lượng, cùng giá cũng như điều kiện bán hàng, giao hàng.</p>
+
+    <p class="bold" style="margin-top: 15px;">Điều 6: Điều khoản chung</p>
+    <p>6.1 Hợp đồng có hiệu lực kể từ ngày ký.</p>
+    <p>6.2 Hai bên cam kết thực hiện đúng các điều khoản trong hợp đồng đã ký kết. Bên nào làm trái với các điều khoản đã ký kết thì bên đó phải chịu trách nhiệm theo quy định của pháp luật. Trong quá trình thưc hiện nếu xảy ra tranh chấp, hai bên cùng nhau bàn bạc giải quyết trên cơ sở thoả thuận và bằng văn bản. Nếu không giải quyết được tranh chấp thì do toà án kinh tế giải quyết. Phán quyết của toà án buộc hai bên phải thi hành. Các chi phí về án phí do bên có lỗi chịu.</p>
+    <p>6.3 Hợp đồng được thành lập thành 02 bản có giá trị pháp lý như nhau, bên A giữ 01 bản bên B giữ 01 bản.</p>
+
+    <table class="signature-table">
+        <tr>
+            <td class="bold">
+                ĐẠI DIỆN BÊN B<br>
+                <span style="font-weight: normal; font-size: 11pt; font-style: italic;">(Ký tên, đóng dấu)</span>
+                <br><br><br><br><br>
+                <span id="b_sign_name" class="uppercase">NGUYỄN QUANG CƯỜNG</span>
+            </td>
+            <td class="bold">
+                ĐẠI DIỆN BÊN A<br>
+                <span style="font-weight: normal; font-size: 11pt; font-style: italic;">(Ký tên, đóng dấu)</span>
+                <br><br><br><br><br>
+                <span id="a_sign_name" class="uppercase">NGUYỄN TẤN HẢI</span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    function docSoTien(soTien) {
+        if (soTien === 0) return "Không đồng chẵn";
+        const mangSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+        
+        function docBlockBaSo(baso, nghia) {
+            let tram = Math.floor(baso / 100);
+            let chuc = Math.floor((baso % 100) / 10);
+            let donvi = baso % 10;
+            let kq = "";
+            
+            if (tram > 0 || nghia) {
+                kq += mangSo[tram] + " trăm ";
+            }
+            if (chuc === 0 && donvi > 0) {
+                if (tram > 0 || nghia) kq += "lẻ ";
+            }
+            if (chuc === 1) {
+                kq += "mười ";
+            } else if (chuc > 1) {
+                kq += mangSo[chuc] + " mươi ";
+            }
+            
+            if (donvi === 1 && chuc > 1) {
+                kq += "mốt";
+            } else if (donvi === 5 && chuc > 0) {
+                kq += "lăm";
+            } else if (donvi > 0) {
+                kq += mangSo[donvi];
+            }
+            return kq;
+        }
+
+        let chuoi = "";
+        let trieu = Math.floor(soTien / 1000000);
+        let nghan = Math.floor((soTien % 1000000) / 1000);
+        let dong = soTien % 1000;
+
+        if (trieu > 0) {
+            chuoi += docBlockBaSo(trieu, false) + " triệu ";
+        }
+        if (nghan > 0) {
+            chuoi += docBlockBaSo(nghan, trieu > 0) + " ngàn ";
+        }
+        if (dong > 0) {
+            chuoi += docBlockBaSo(dong, trieu > 0 || nghan > 0);
+        }
+
+        chuoi = chuoi.trim().replace(/\s+/g, ' ');
+        if (chuoi === "") return "Không đồng";
+        return chuoi.charAt(0).toUpperCase() + chuoi.slice(1) + " đồng chẵn";
+    }
+
+    function addRow() {
+        let table = document.getElementById("invoice-table").getElementsByTagName('tbody')[0];
+        let refRow = document.getElementById("row-summary-1");
+        let newRow = document.createElement("tr");
+        newRow.className = "item-row";
+        newRow.innerHTML = `
+            <td class="stt-cell"></td>
+            <td><input type="text" class="t_content" value="" style="text-align: left;" placeholder="Nhập nội dung..."></td>
+            <td><input type="text" class="t_unit" value="Cái"></td>
+            <td><input type="text" class="t_qty" value="0" onchange="calculateTotal()"></td>
+            <td><input type="text" class="t_price" value="0" onchange="calculateTotal()"></td>
+            <td><input type="text" class="t_sub" value="0" readonly></td>
+            <td class="no-word"><button type="button" onclick="deleteRow(this)" style="padding: 2px 6px; font-size: 11px; background-color: #dc3545; color: white; border: none; cursor: pointer; border-radius: 3px;">x</button></td>
+        `;
+        table.insertBefore(newRow, refRow);
+        updateSTT();
+    }
+
+    function deleteRow(btn) {
+        let rows = document.querySelectorAll(".item-row");
+        if (rows.length > 1) {
+            let row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            updateSTT();
+            calculateTotal();
+        } else {
+            alert("Phải giữ lại ít nhất 1 hàng nội dung.");
+        }
+    }
+
+    function updateSTT() {
+        let sttCells = document.querySelectorAll(".stt-cell");
+        sttCells.forEach((cell, index) => { cell.innerText = index + 1; });
+    }
+
+    function calculateTotal() {
+        let rows = document.querySelectorAll(".item-row");
+        let grandSub = 0;
+        rows.forEach(row => {
+            let qty = parseFloat(row.querySelector(".t_qty").value.replace(/\./g, '').replace(',', '.')) || 0;
+            let price = parseFloat(row.querySelector(".t_price").value.replace(/\./g, '').replace(',', '.')) || 0;
+            let sub = qty * price;
+            grandSub += sub;
+            row.querySelector(".t_sub").value = sub.toLocaleString('vi-VN');
+        });
+        let vat = Math.round(grandSub * 0.08);
+        let total = grandSub + vat;
+        
+        let formattedTotal = total.toLocaleString('vi-VN');
+        let textWord = docSoTien(total);
+
+        document.getElementById('t_total').value = grandSub.toLocaleString('vi-VN');
+        document.getElementById('t_vat').value = vat.toLocaleString('vi-VN');
+        document.getElementById('t_all').value = formattedTotal;
+        document.getElementById('t_text').value = textWord;
+        
+        // Đồng bộ toàn bộ các phần text số tiền khác trong hợp đồng
+        document.getElementById('val_contract_text').innerText = formattedTotal;
+        document.getElementById('val_contract_word').innerText = textWord;
+        document.getElementById('pay_contract_text').innerText = formattedTotal;
+        document.getElementById('pay_contract_word').innerText = textWord;
+    }
+
+    function exportToWord() {
+        document.getElementById('b_sign_name').innerText = document.getElementById('b_rep').value.toUpperCase();
+        document.getElementById('a_sign_name').innerText = document.getElementById('a_rep').value.toUpperCase();
+
+        // Sử dụng mso-para-margin-bottom và mso-line-height-rule để triệt tiêu khoảng cách thừa lỗi font của Word
+        let wordStyles = "<style>" +
+            "@page { margin: 1.0in 0.75in 1.0in 0.75in; }" + 
+            "body { font-family: 'Times New Roman', serif; font-size: 13pt; line-height: 1.3; }" +
+            "p, div { text-align: justify; font-size: 13pt; margin: 0px; mso-para-margin-top: 0px; mso-para-margin-bottom: 6pt; mso-line-height-rule: exactly; line-height: 1.3; }" +
+            ".bold { font-weight: bold; }" +
+            ".txt-center { text-align: center; }" +
+            ".uppercase { text-transform: uppercase; }" +
+            ".italic { font-style: italic; }" +
+            "table { border-collapse: collapse; width: 100%; margin-bottom: 12pt; }" +
+            ".header-table td, .signature-table td { border: none !important; padding: 3px; font-size: 13pt; text-align: center; line-height: 1.3; }" +
+            ".content-table th, .content-table td { border: 1pt solid windowtext !important; padding: 6px; font-size: 12pt; text-align: center; }" +
+            "</style>";
+
+        let headerDoc = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'>" + wordStyles + "</head><body>";
+        let footerDoc = "</body></html>";
+        
+        let cloneContainer = document.getElementById('contract-content').cloneNode(true);
+        
+        let invoiceTable = cloneContainer.querySelector('#invoice-table');
+        if (invoiceTable) {
+            let trs = invoiceTable.querySelectorAll('tr');
+            trs.forEach(tr => { if (tr.cells.length > 0) tr.deleteCell(-1); });
+        }
+
+        let inputs = cloneContainer.querySelectorAll('input');
+        inputs.forEach(input => {
+            let span = document.createElement('span');
+            span.innerText = input.value;
+            if (input.classList.contains('bold')) span.style.fontWeight = 'bold';
+            if (input.classList.contains('italic')) span.style.fontStyle = 'italic';
+            if (input.classList.contains('uppercase')) span.style.textTransform = 'uppercase';
+            input.parentNode.replaceChild(span, input);
+        });
+
+        let htmlContent = headerDoc + cloneContainer.innerHTML + footerDoc;
+        let blob = new Blob(['\ufeff' + htmlContent], { type: 'application/msword' });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = 'Hop_Dong_Dich_Vu_' + document.getElementById('contract_id').value.replace(/\//g, '_') + '.doc';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
+</body>
+</html>
