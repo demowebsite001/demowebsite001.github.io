@@ -7,8 +7,10 @@
         body { font-family: 'Times New Roman', Times, serif; background-color: #f0f0f0; margin: 0; padding: 20px; color: #000; }
         .container { max-width: 794px; background: #fff; margin: 0 auto; padding: 75px 56px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .btn-panel { max-width: 794px; margin: 0 auto 20px auto; text-align: right; }
-        button { background-color: #0056b3; color: white; border: none; padding: 10px 20px; font-size: 14px; cursor: pointer; border-radius: 4px; font-family: Arial, sans-serif; }
+        button { background-color: #0056b3; color: white; border: none; padding: 10px 20px; font-size: 14px; cursor: pointer; border-radius: 4px; font-family: Arial, sans-serif; margin-left: 10px; }
         button:hover { background-color: #004085; }
+        button.btn-pdf { background-color: #dc3545; }
+        button.btn-pdf:hover { background-color: #bd2130; }
 
         .txt-center { text-align: center; }
         .txt-justify { text-align: justify; }
@@ -37,12 +39,28 @@
 
         .signature-table { width: 100%; border-collapse: collapse; margin-top: 50px; }
         .signature-table td { border: none !important; padding: 0; width: 50%; text-align: center; vertical-align: top; font-size: 13pt; line-height: 1.4; }
+
+        /* BỘ CSS DÀNH RIÊNG KHI IN AN / XUẤT PDF TRÊN IPHONE */
+        @media print {
+            @page {
+                size: A4;
+                margin: 20mm 15mm 20mm 15mm;
+            }
+            body { background-color: #fff; padding: 0; margin: 0; font-family: 'Times New Roman', Times, serif; }
+            .container { box-shadow: none; padding: 0; margin: 0; max-width: 100%; width: 100%; }
+            .btn-panel, .no-word { display: none !important; }
+            
+            /* Chuyển ô input thành text phẳng mượt mà khi ra file PDF */
+            input[type="text"] { border-bottom: none !important; padding: 0 !important; background: transparent !important; }
+            .content-table th, .content-table td { border: 1px solid #000 !important; }
+        }
     </style>
 </head>
 <body>
 
 <div class="btn-panel">
-    <button onclick="exportToWord()">Tải file Word (.doc)</button>
+    <button type="button" class="btn-pdf" onclick="exportToPdf()">Xuất file PDF chuẩn</button>
+    <button type="button" onclick="exportToWord()">Tải file Word (.doc)</button>
 </div>
 
 <div class="container" id="contract-content">
@@ -170,7 +188,7 @@
         </tr>
     </table>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
     function docSoTien(soTien) {
         if (soTien === 0) return "Không đồng chẵn";
@@ -286,15 +304,72 @@
         document.getElementById('pay_contract_word').innerText = textWord;
     }
 
-    function exportToWord() {
-        // Cập nhật tên người đại diện ký hợp đồng dựa trên input hiện tại
+    function syncSignatures() {
         let signB = document.getElementById('b_rep').value.toUpperCase();
         let signA = document.getElementById('a_rep').value.toUpperCase();
-        
         document.getElementById('b_sign_name').innerText = signB;
         document.getElementById('a_sign_name').innerText = signA;
+    }
 
-        // Cấu hình style chuẩn Microsoft Word
+    function exportToPdf() {
+		// Cập nhật tên đại diện dưới chữ ký
+		document.getElementById('b_sign_name').innerText = document.getElementById('b_rep').value.toUpperCase();
+		document.getElementById('a_sign_name').innerText = document.getElementById('a_rep').value.toUpperCase();
+
+		// 1. Sử dụng đúng bộ CSS Print/Word định dạng font Times New Roman và cấu trúc bảng gọn gàng
+		let pdfStyles = "<style>" +
+			"body { font-family: 'Times New Roman', Times, serif; font-size: 13pt; line-height: 1.4; background-color: #fff; color: #000; }" +
+			"p, div { text-align: justify; font-size: 13pt; margin: 0 0 8px 0; line-height: 1.4; }" +
+			".bold { font-weight: bold; }" +
+			".txt-center { text-align: center; }" +
+			".uppercase { text-transform: uppercase; }" +
+			".italic { font-style: italic; }" +
+			"table { border-collapse: collapse; width: 100%; margin: 15px 0; }" +
+			".header-table td, .signature-table td { border: none !important; padding: 3px; font-size: 13pt; text-align: center; line-height: 1.4; vertical-align: top; }" +
+			".content-table th, .content-table td { border: 1px solid #000 !important; padding: 8px; font-size: 11pt; text-align: center; vertical-align: middle; }" +
+			".content-table th { font-weight: bold; background-color: #f2f2f2; }" +
+			"</style>";
+
+		// 2. Tạo bản sao để loại bỏ các trường tương tác (inputs, buttons)
+		let cloneContainer = document.getElementById('contract-content').cloneNode(true);
+		
+		// Loại bỏ cột chức năng (+/-) trên bảng danh mục
+		let invoiceTable = cloneContainer.querySelector('#invoice-table');
+		if (invoiceTable) {
+			let trs = invoiceTable.querySelectorAll('tr');
+			trs.forEach(tr => { if (tr.cells.length > 0) tr.deleteCell(-1); });
+		}
+
+		// Biến đổi toàn bộ thẻ input thành thẻ text (span) tĩnh giúp PDF không bị lỗi hiển thị ô nhập liệu
+		let inputs = cloneContainer.querySelectorAll('input');
+		inputs.forEach(input => {
+			let span = document.createElement('span');
+			span.innerText = input.value;
+			if (input.classList.contains('bold')) span.style.fontWeight = 'bold';
+			if (input.classList.contains('italic')) span.style.fontStyle = 'italic';
+			if (input.classList.contains('uppercase')) span.style.textTransform = 'uppercase';
+			input.parentNode.replaceChild(span, input);
+		});
+
+		// 3. Đóng gói chuỗi HTML thuần chứa dữ liệu sạch tương đương tệp Word
+		let finalHtmlContent = "<html><head><meta charset='utf-8'>" + pdfStyles + "</head><body>" + cloneContainer.innerHTML + "</body></html>";
+
+		// 4. Cấu hình html2pdf để xử lý chuỗi HTML tĩnh
+		let opt = {
+			margin:       [15, 15, 15, 15], // Định lề trang PDF (Top, Left, Bottom, Right) theo mm
+			filename:     'Hop_Dong_Dich_Vu.pdf',
+			image:        { type: 'jpeg', quality: 0.98 },
+			html2canvas:  { scale: 2, useCORS: true, logging: false },
+			jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+		};
+
+		// Đẩy trực tiếp chuỗi HTML đã xử lý vào hàm xuất bản PDF
+		html2pdf().set(opt).from(finalHtmlContent).save();
+	}
+
+    function exportToWord() {
+        syncSignatures();
+
         let wordStyles = "<style>" +
             "@page { margin: 1.0in 0.75in 1.0in 0.75in; }" + 
             "body { font-family: 'Times New Roman', serif; font-size: 13pt; line-height: 1.3; }" +
@@ -311,7 +386,6 @@
         let headerDoc = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'>" + wordStyles + "</head><body>";
         let footerDoc = "</body></html>";
         
-        // Sử dụng cloneNode để xử lý chuyển đổi input thành text tĩnh khi xuất file Word
         let cloneContainer = document.getElementById('contract-content').cloneNode(true);
         
         let invoiceTable = cloneContainer.querySelector('#invoice-table');
@@ -335,7 +409,6 @@
         let url = URL.createObjectURL(blob);
         let a = document.createElement('a');
         a.href = url;
-        // Đặt tên file mặc định không phụ thuộc vào trường contract_id đã xóa
         a.download = 'Hop_Dong_Dich_Vu.doc';
         document.body.appendChild(a);
         a.click();
