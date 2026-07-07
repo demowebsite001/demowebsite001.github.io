@@ -48,10 +48,6 @@
 <div class="container" id="contract-content">
     <table class="header-table">
         <tr>
-            <!-- <td style="width: 45%; font-weight: bold; text-transform: uppercase; text-align: center;"> -->
-                <!-- CÔNG TY TNHH KEEN VIỆT NAM<br> -->
-                <!-- <span style="font-weight: normal; font-size: 11pt;">Số: <input type="text" id="contract_id" value="0406/HĐDV.2024" class="w-medium" style="font-size: 11pt;"></span> -->
-            <!-- </td> -->
             <td style="width: 55%; font-weight: bold; text-align: center;">
                 CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
                 <span style="font-weight: bold;">Độc lập - Tự do - Hạnh phúc</span>
@@ -72,7 +68,6 @@
     <p class="bold" style="margin-top: 15px;">BÊN BẠN (Bên A): <input type="text" id="a_name" value="CÔNG TY TNHH NTH VIET NAM" class="w-large bold uppercase"></p>
     <p>Địa chỉ: <input type="text" id="a_addr" value="108 Phan Huy Ích, Phường 15, Quận Tân Bình, TP Hồ Chí Minh, Việt Nam" class="w-full"></p>
     <p>Người đại diện: <input type="text" id="a_rep" value="Ông NGUYỄN TẤN HẢI" class="w-medium bold"></p>
-    <!-- <p>Chức vụ: <input type="text" id="a_role" value="Giám đốc" class="w-medium"></p> -->
     <p>Điện thoại: <input type="text" id="a_phone" value="0339220521" class="w-medium"></p>
     <p>Mã số thuế: <input type="text" id="a_tax" value="0312748633" class="w-medium"></p>
     <p>Tài khoản số: <input type="text" id="a_acc" value="060140891341 – Sacombank - CN Quận 12, TP HCM" class="w-full"></p>
@@ -80,7 +75,6 @@
     <p class="bold" style="margin-top: 15px;">BÊN MUA (Bên B): <input type="text" id="b_name" value="TÊN" class="w-large bold uppercase"></p>
     <p>Địa chỉ: <input type="text" id="b_addr" value="ĐỊA CHỈ" class="w-full"></p>
     <p>Người đại diện: <input type="text" id="b_rep" value="Ông NGUYỄN VĂN A" class="w-medium bold"></p>
-    <!-- <p>Chức vụ: <input type="text" id="b_role" value="Giám đốc" class="w-medium"></p> -->
     <p>Mã số thuế: <input type="text" id="b_tax" value="0301340440" class="w-medium"></p>
     <p>Điện thoại: <input type="text" id="b_phone" value="(028) 39849422" class="w-medium"></p>
     <p>Tài khoản số: <input type="text" id="b_acc" value="120540254 tại VPBank – CN Hồ Chí Minh" class="w-full"></p>
@@ -286,7 +280,6 @@
         document.getElementById('t_all').value = formattedTotal;
         document.getElementById('t_text').value = textWord;
         
-        // Đồng bộ toàn bộ các phần text số tiền khác trong hợp đồng
         document.getElementById('val_contract_text').innerText = formattedTotal;
         document.getElementById('val_contract_word').innerText = textWord;
         document.getElementById('pay_contract_text').innerText = formattedTotal;
@@ -294,10 +287,14 @@
     }
 
     function exportToWord() {
-        document.getElementById('b_sign_name').innerText = document.getElementById('b_rep').value.toUpperCase();
-        document.getElementById('a_sign_name').innerText = document.getElementById('a_rep').value.toUpperCase();
+        // Cập nhật tên người đại diện ký hợp đồng dựa trên input hiện tại
+        let signB = document.getElementById('b_rep').value.toUpperCase();
+        let signA = document.getElementById('a_rep').value.toUpperCase();
+        
+        document.getElementById('b_sign_name').innerText = signB;
+        document.getElementById('a_sign_name').innerText = signA;
 
-        // Sử dụng mso-para-margin-bottom và mso-line-height-rule để triệt tiêu khoảng cách thừa lỗi font của Word
+        // Cấu hình style chuẩn Microsoft Word
         let wordStyles = "<style>" +
             "@page { margin: 1.0in 0.75in 1.0in 0.75in; }" + 
             "body { font-family: 'Times New Roman', serif; font-size: 13pt; line-height: 1.3; }" +
@@ -314,6 +311,7 @@
         let headerDoc = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'>" + wordStyles + "</head><body>";
         let footerDoc = "</body></html>";
         
+        // Sử dụng cloneNode để xử lý chuyển đổi input thành text tĩnh khi xuất file Word
         let cloneContainer = document.getElementById('contract-content').cloneNode(true);
         
         let invoiceTable = cloneContainer.querySelector('#invoice-table');
@@ -337,7 +335,8 @@
         let url = URL.createObjectURL(blob);
         let a = document.createElement('a');
         a.href = url;
-        a.download = 'Hop_Dong_Dich_Vu_' + document.getElementById('contract_id').value.replace(/\//g, '_') + '.doc';
+        // Đặt tên file mặc định không phụ thuộc vào trường contract_id đã xóa
+        a.download = 'Hop_Dong_Dich_Vu.doc';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
